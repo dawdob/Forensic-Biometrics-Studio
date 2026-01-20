@@ -10,6 +10,8 @@ import { useCallback, useMemo } from "react";
 import { MarkingTypesStore } from "@/lib/stores/MarkingTypes/MarkingTypes";
 import { getOppositeCanvasId } from "@/components/pixi/canvas/utils/get-opposite-canvas-id";
 import { GlobalStateStore } from "@/lib/stores/GlobalState";
+import { GlobalHistoryManager } from "@/lib/stores/History/HistoryManager";
+import { RemoveMarkingCommand } from "@/lib/stores/History/MarkingCommands";
 /* eslint-disable sonarjs/no-duplicated-branches */
 export type EmptyMarking = {
     label: MarkingClass["label"];
@@ -48,7 +50,12 @@ export const useColumns = (
 
     const handleRemoveClick = useCallback(
         (marking: MarkingClass) => {
-            MarkingsStore(id).actions.markings.removeOneByLabel(marking.label);
+            const store = MarkingsStore(id);
+            const command = new RemoveMarkingCommand(
+                store.actions.markings,
+                marking
+            );
+            GlobalHistoryManager.executeCommand(command);
         },
         [id]
     );

@@ -7,6 +7,7 @@ import { WorkingModeStore } from "@/lib/stores/WorkingMode";
 import { useSettingsSync } from "@/lib/hooks/useSettingsSync";
 import { useCustomTheme } from "@/lib/hooks/useCustomTheme";
 import { CustomThemeStore } from "@/lib/stores/CustomTheme";
+import { GlobalHistoryManager } from "@/lib/stores/History/HistoryManager";
 
 const Homepage = lazy(() =>
     import("@/components/tabs/homepage/homepage").then(module => ({
@@ -25,6 +26,31 @@ export default function App() {
 
     useEffect(() => {
         CustomThemeStore.rehydrate();
+    }, []);
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.ctrlKey || event.metaKey) {
+                switch (event.key.toLowerCase()) {
+                    case "z":
+                        event.preventDefault(); 
+                        GlobalHistoryManager.undo();
+                        break;
+                    case "y":
+                        event.preventDefault();
+                        GlobalHistoryManager.redo();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
     }, []);
 
     useSettingsSync();

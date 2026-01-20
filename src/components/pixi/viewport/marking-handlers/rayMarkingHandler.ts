@@ -8,6 +8,8 @@ import { MarkingModePlugin } from "@/components/pixi/viewport/plugins/markingMod
 import { RotationStore } from "@/lib/stores/Rotation/Rotation";
 import { CANVAS_ID } from "@/components/pixi/canvas/hooks/useCanvasContext";
 import { getAdjustedPosition } from "@/components/pixi/viewport/utils/transform-point";
+import { GlobalHistoryManager } from "@/lib/stores/History/HistoryManager";
+import { AddOrUpdateMarkingCommand } from "@/lib/stores/History/MarkingCommands";
 
 export class RayMarkingHandler extends MarkingHandler {
     private stage: 1 | 2 = 1;
@@ -83,12 +85,22 @@ export class RayMarkingHandler extends MarkingHandler {
         }
     }
 
-    handleLMBDown() {
+   handleLMBDown() {
         if (this.stage === 2) {
             const { markingsStore } = this.plugin.handlerParams;
-            markingsStore.actions.markings.addOne(
-                markingsStore.state.temporaryMarking as RayMarking
+            const markingToAdd = markingsStore.state.temporaryMarking as RayMarking;
+
+            if (!markingToAdd) {
+                this.cleanup();
+                return;
+            }
+
+            const command = new AddOrUpdateMarkingCommand(
+                markingsStore.actions.markings,
+                markingToAdd
             );
+            GlobalHistoryManager.executeCommand(command);
+
             this.cleanup();
         }
     }
