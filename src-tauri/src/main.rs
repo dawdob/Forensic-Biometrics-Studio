@@ -67,7 +67,7 @@ fn main() {
                 .get_webview_window("main")
                 .expect("no main window")
                 .set_focus();
-        })) 
+        }))  
         .invoke_handler(tauri::generate_handler![
             show_main_window_if_hidden,
             close_splashscreen_if_exists,
