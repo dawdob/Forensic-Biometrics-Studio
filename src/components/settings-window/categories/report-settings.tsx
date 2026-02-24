@@ -7,8 +7,8 @@ import { Label } from "@/components/ui/label";
 
 const DEFAULT_REPORT_SETTINGS = {
     performedBy: "Jan Kowalski",
-    department: "Wydzia\u0142 Bada\u0144 Daktyloskopijnych i Traseologicznych",
-    addressLine1: "ul. Mi\u0142a 1",
+    department: "Wydział Badań Daktyloskopijnych i Traseologicznych",
+    addressLine1: "ul. Miła 1",
     addressLine2: "02-520 Warszawa",
     addressLine3: "",
     addressLine4: "",
