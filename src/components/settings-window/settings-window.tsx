@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { listen } from "@tauri-apps/api/event";
 import { WindowControls } from "@/components/menu/window-controls";
 import { Menubar } from "@/components/ui/menubar";
 import { cn } from "@/lib/utils/shadcn";
@@ -91,6 +92,18 @@ export function SettingsWindow() {
         init();
     }, []);
 
+    useEffect(() => {
+        const unlisten = listen<string>("settings-category-change", event => {
+            const category = event.payload as SETTINGS_CATEGORY;
+            if (Object.values(SETTINGS_CATEGORY).includes(category)) {
+                setActiveCategory(category);
+            }
+        });
+        return () => {
+            unlisten.then(fn => fn());
+        };
+    }, []);
+
     const renderCategoryContent = () => {
         switch (activeCategory) {
             case SETTINGS_CATEGORY.LANGUAGE:
@@ -139,7 +152,7 @@ export function SettingsWindow() {
             </Menubar>
 
             <div className="flex flex-1 w-full overflow-hidden p-2 gap-2">
-                <div className="w-1/3 flex flex-col gap-1">
+                <div className="flex flex-col gap-1 max-w-[180px]">
                     {categories.map(category => (
                         <button
                             type="button"
@@ -162,7 +175,7 @@ export function SettingsWindow() {
                     ))}
                 </div>
 
-                <div className="w-2/3 bg-background backdrop-blur-sm border border-border rounded-xl p-2 overflow-y-auto">
+                <div className="flex-1 bg-background backdrop-blur-sm border border-border rounded-xl p-2 overflow-y-auto">
                     {renderCategoryContent()}
                 </div>
             </div>

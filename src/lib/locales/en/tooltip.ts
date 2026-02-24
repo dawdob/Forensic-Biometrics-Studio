@@ -24,6 +24,10 @@ const d: Dictionary = {
     "Generate report": "Generate report",
     "Report generated": "Report generated",
     "Failed to generate report": "Failed to generate report",
+    "Rotate left": "Rotate left (-5°)",
+    "Rotate right": "Rotate right (+5°)",
+    "Reset rotation": "Reset rotation to 0°",
+    "Synchronize rotation": "Synchronize rotation between viewports",
 };
 
 export default d;

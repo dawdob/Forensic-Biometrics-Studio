@@ -41,8 +41,11 @@ export function VerticalToolbar({ className, ...props }: VerticalToolbarProps) {
         state => state.settings.cursor
     );
 
-    const { locked: isViewportLocked, scaleSync: isViewportScaleSync } =
-        DashboardToolbarStore.use(state => state.settings.viewport);
+    const {
+        locked: isViewportLocked,
+        scaleSync: isViewportScaleSync,
+        rotationSync: isRotationSync,
+    } = DashboardToolbarStore.use(state => state.settings.viewport);
 
     const availableMarkingTypes = MarkingTypesStore.use(state => state.types);
 
@@ -280,6 +283,26 @@ export function VerticalToolbar({ className, ...props }: VerticalToolbarProps) {
                     </Toggle>
 
                     <ReportDialog />
+                    <Toggle
+                        variant="outline"
+                        className="w-full justify-start gap-2 h-auto min-h-[40px] py-2 px-3"
+                        pressed={isRotationSync}
+                        onClick={
+                            DashboardToolbarStore.actions.settings.viewport
+                                .toggleRotationSync
+                        }
+                    >
+                        <RotateCw
+                            className="flex-shrink-0"
+                            size={ICON.SIZE}
+                            strokeWidth={ICON.STROKE_WIDTH}
+                        />
+                        <span className="text-sm text-left leading-tight">
+                            {t("Synchronize rotation", {
+                                ns: "tooltip",
+                            })}
+                        </span>
+                    </Toggle>
                 </div>
             </div>
         </div>

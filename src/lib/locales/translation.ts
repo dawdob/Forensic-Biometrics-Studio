@@ -140,6 +140,10 @@ export type i18nTooltip = Recordify<
     | "Generate report"
     | "Report generated"
     | "Failed to generate report"
+    | "Rotate left"
+    | "Rotate right"
+    | "Reset rotation"
+    | "Synchronize rotation"
 >;
 
 export type i18nDialog = Recordify<

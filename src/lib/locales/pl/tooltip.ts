@@ -21,10 +21,15 @@ const d: Dictionary = {
     "Rotation instructions":
         "Oznacz lini\u0105 dwa te same punkty na ka\u017cdym obrazie rozpoczynaj\u0105c od do\u0142u, dolny punkt b\u0119dzie kotwic\u0105 obrotu a g\u00f3rny pos\u0142u\u017cy wyliczeniu k\u0105ta obrotu",
     "Calculate and align": "Oblicz i dopasuj",
-    "Reset rotation panel": "Zresetuj rotacj\u0119",
+    "Reset rotation panel": "Zresetuj rotację",
     "Generate report": "Generuj raport",
     "Report generated": "Raport wygenerowany",
-    "Failed to generate report": "Nie uda\u0142o si\u0119 wygenerowa\u0107 raportu",
+    "Failed to generate report": "Nie udało się wygenerować raportu",
+    "Reset rotation panel": "Zresetuj rotację",
+    "Rotate left": "Obróć w lewo (-5°)",
+    "Rotate right": "Obróć w prawo (+5°)",
+    "Reset rotation": "Zresetuj rotację do 0°",
+    "Synchronize rotation": "Synchronizuj rotację między widokami",
 };
 
 export default d;
